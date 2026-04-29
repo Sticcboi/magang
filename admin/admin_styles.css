@@ -1,0 +1,486 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+:root {
+    --maroon-dark: #4a0000;
+    --maroon-bright: #800000;
+    --maroon-header: #600000;
+    --gold: #ffd700;
+    --bg-light: #f4f4f4;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-light);
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ==================== SIDEBAR ==================== */
+#sidebar {
+    min-width: 260px;
+    max-width: 260px;
+    background: linear-gradient(180deg, var(--maroon-bright) 0%, var(--maroon-dark) 100%);
+    height: 100vh;
+    color: white;
+    transition: all 0.3s;
+    box-shadow: 4px 0 10px rgba(0,0,0,0.2);
+    position: fixed;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+}
+
+#sidebar .sidebar-header {
+    padding: 25px;
+    background: var(--maroon-header);
+    text-align: center;
+    border-bottom: 4px solid var(--gold);
+    flex-shrink: 0;
+}
+
+#sidebar ul {
+    padding: 15px 0;
+    list-style: none;
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin: 0;
+}
+
+/* Scrollbar styling */
+#sidebar ul::-webkit-scrollbar {
+    width: 6px;
+}
+
+#sidebar ul::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+#sidebar ul::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+}
+
+#sidebar ul::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+#sidebar ul li a {
+    padding: 12px 25px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    font-size: 0.9rem;
+    border-left: 4px solid transparent;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#sidebar ul li a:hover, 
+#sidebar ul li.active > a,
+#sidebar ul li a[aria-expanded="true"] {
+    color: white;
+    background: rgba(255,255,255,0.1);
+    border-left: 4px solid var(--gold);
+    padding-left: 23px;
+}
+
+#sidebar ul li a i {
+    margin-right: 15px;
+    width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+#sidebar ul li a .chevron {
+    margin-left: auto;
+    transition: transform 0.2s ease;
+}
+
+#sidebar ul li a[aria-expanded="true"] .chevron {
+    transform: rotate(180deg);
+}
+
+#sidebar ul li .sidebar-submenu {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#sidebar ul li .sidebar-submenu li a {
+    padding: 10px 45px;
+    font-size: 0.85rem;
+    border-left: 4px solid transparent;
+    color: rgba(255,255,255,0.75);
+}
+
+#sidebar ul li .sidebar-submenu li a:hover,
+#sidebar ul li .sidebar-submenu li.active > a {
+    color: white;
+    background: rgba(255,255,255,0.08);
+    border-left: 4px solid var(--gold);
+}
+
+#sidebar > ul > li:last-child {
+    margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ==================== MAIN CONTENT ==================== */
+#content {
+    width: 100%;
+    margin-left: 260px;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 0;
+}
+
+.top-navbar {
+    background: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border-top: 5px solid var(--maroon-bright);
+    flex-shrink: 0;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-profile img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: 2px solid var(--maroon-bright);
+}
+
+.content-padding {
+    padding: 30px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+#sidebarOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.25);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 900;
+}
+
+body.sidebar-open #sidebarOverlay {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Ringankan tampilan modal backdrop agar halaman tidak terlalu gelap saat popup terbuka */
+.modal-backdrop.show {
+    opacity: 0.2 !important;
+}
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Pastikan modal dan input-nya fully interactive */
+.modal {
+    z-index: 1050 !important;
+}
+.modal-dialog {
+    z-index: 1051 !important;
+}
+.modal-content {
+    z-index: 1051 !important;
+    position: relative;
+}
+.modal-body {
+    position: relative;
+    z-index: 1060 !important;
+}
+.modal-body input,
+.modal-body textarea,
+.modal-body select,
+.form-control {
+    position: relative !important;
+    z-index: 1062 !important;
+    pointer-events: auto !important;
+}
+.modal-body input:focus,
+.modal-body textarea:focus,
+.modal-body select:focus,
+.form-control:focus {
+    outline: 2px solid #0d6efd !important;
+    outline-offset: -1px;
+    z-index: 1065 !important;
+}
+.modal-body input::placeholder {
+    opacity: 0.6;
+}
+
+
+
+/* ==================== RESPONSIVE: TABLET (≤991px) ==================== */
+@media (max-width: 991px) {
+    /* Sidebar: overlay mode, don't push content */
+    #sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 260px;
+        z-index: 1050;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+    
+    body.sidebar-open #sidebar,
+    #sidebar.show {
+        transform: translateX(0);
+    }
+    
+    #sidebarOverlay {
+        pointer-events: none;
+    }
+    body.sidebar-open #sidebarOverlay {
+        pointer-events: auto;
+    }
+    
+    #content {
+        margin-left: 0;
+    }
+    
+    /* Don't push content when sidebar opens */
+    body.sidebar-open #content {
+        margin-left: 0;
+    }
+
+    .top-navbar {
+        padding: 12px 16px;
+    }
+
+    .content-padding {
+        padding: 20px 16px;
+    }
+
+    /* Tables: scrollable on tablet */
+    .table-responsive {
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Nav tabs: horizontal scroll */
+    .nav-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    .nav-tabs .nav-item {
+        flex-shrink: 0;
+    }
+    .nav-tabs .nav-link {
+        white-space: nowrap;
+        padding: 0.8rem 1rem;
+    }
+
+    /* Fix modal offset (no sidebar offset on mobile) */
+    .modal {
+        padding-left: 0 !important;
+    }
+
+    /* Sticky form becomes static */
+    .sticky-top {
+        position: static !important;
+    }
+
+    /* Page header stacking */
+    .page-header,
+    .d-flex.justify-content-between.align-items-center.mb-4 {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 12px;
+    }
+}
+
+/* ==================== RESPONSIVE: MOBILE (≤576px) ==================== */
+@media (max-width: 576px) {
+    .content-padding {
+        padding: 14px 10px;
+    }
+
+    .top-navbar {
+        padding: 10px 12px;
+    }
+    .top-navbar .fw-bold {
+        font-size: 0.85rem;
+    }
+
+    /* Card body less padding */
+    .card-body {
+        padding: 16px 12px !important;
+    }
+
+    /* Smaller headings */
+    h2, .h2 { font-size: 1.3rem; }
+    h3, .h3 { font-size: 1.15rem; }
+    h4, .h4 { font-size: 1.05rem; }
+    h5, .h5 { font-size: 0.95rem; }
+
+    /* Form upload row: stack vertically */
+    .d-flex.gap-2:has(input[type="file"]) {
+        flex-direction: column;
+    }
+
+    /* Row g-4 reduce gap */
+    .row.g-4 {
+        --bs-gutter-y: 0.75rem;
+    }
+
+    /* Table font size */
+    .table { font-size: 0.8rem; }
+    .table th, .table td { padding: 0.5rem 0.4rem; }
+
+    /* Buttons: compact */
+    .btn { font-size: 0.82rem; }
+    .btn-sm { font-size: 0.72rem; padding: 0.25rem 0.5rem; }
+
+    /* Badges */
+    .badge { font-size: 0.7rem; }
+
+    /* Stat card in header area */
+    .card.border-0.shadow-sm.px-3.py-2 {
+        width: 100%;
+    }
+
+    /* Modal dialog: full width on mobile */
+    .modal-dialog {
+        margin: 0.5rem;
+        max-width: calc(100% - 1rem);
+    }
+    .modal-dialog-centered {
+        min-height: calc(100% - 1rem);
+    }
+    .modal-content {
+        border-radius: 12px !important;
+    }
+
+    /* SweetAlert2: compact on mobile */
+    .swal2-popup {
+        width: 90% !important;
+        font-size: 0.9rem !important;
+    }
+}
+
+/* ==================== GLOBAL UTILITY: SCROLLABLE TABLES ==================== */
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ==================== CUSTOM STYLES FOR PARIWISATA ADMIN ==================== */
+
+/* Gradient backgrounds */
+.bg-gradient-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.bg-gradient-success {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+}
+
+.bg-gradient-warning {
+    background: linear-gradient(135deg, #fcb045 0%, #fd1d1d 100%);
+}
+
+.bg-gradient-info {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.bg-gradient-danger {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+}
+
+/* WhatsApp Settings Styling */
+.input-group-text {
+    background-color: #f8f9fa;
+    border-color: #dee2e6;
+}
+
+.input-group .form-control:focus {
+    z-index: 3;
+}
+
+.input-group .input-group-text {
+    border-right: none;
+}
+
+.input-group .form-control {
+    border-left: none;
+}
+
+.input-group .form-control:focus + .input-group-text {
+    border-color: #198754;
+}
+
+/* Hover lift effect */
+.hover-lift {
+    transition: all 0.3s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+}
+
+/* Form floating labels with icons */
+.form-floating > label {
+    padding-left: 2.5rem;
+}
+
+.form-floating > .form-control {
+    padding-left: 2.5rem;
+}
+
+/* Gap utilities */
+.gap-2 {
+    gap: 0.5rem !important;
+}
+
+.gap-3 {
+    gap: 1rem !important;
+}
+
+/* Custom badge styles */
+.badge {
+    font-weight: 500;
+}
+
+/* Card improvements */
+.card {
+    border-radius: 0.75rem;
+}
+
+.card-header {
+    border-radius: 0.75rem 0.75rem 0 0 !important;
+}
+
+

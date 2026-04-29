@@ -1,0 +1,313 @@
+/* =======================================================
+   1. BASE & UTILITIES
+======================================================= */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f6f9; 
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+footer {
+  margin-top: auto;
+}
+
+.text-justify-custom {
+  text-align: justify;
+}
+
+/* =======================================================
+   2. NAVBAR & BANNER (PERBAIKAN CELAH PUTIH)
+======================================================= */
+/* Wadah Navbar dipastikan tidak memiliki spasi kosong */
+#navbar-container {
+  margin: 0 !important;
+  padding: 0 !important;
+  display: block;
+}
+
+/* Targetkan langsung navbar dari Bootstrap (termasuk yang di-load via JS) */
+#navbar-container .navbar, .navbar {
+  margin-bottom: 0 !important; /* Menghilangkan margin bawah bawaan Bootstrap */
+  padding-bottom: 0 !important;
+  position: relative !important;
+  z-index: 1050 !important; /* Lapisan paling atas */
+  border: none !important;
+  border-radius: 0 !important;
+  background-color: #750000 !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4) !important; 
+}
+
+/* Hilangkan tarik paksa margin negatif (-24px), biarkan mengalir natural */
+#heroCarousel {
+  margin: 0 !important; 
+  padding: 0 !important;
+  position: relative;
+  z-index: 1; /* Lapisan bawah */
+  display: block;
+  width: 100%;
+}
+
+.carousel-inner {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100%;
+  height: 500px;
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel-item {
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 500px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transition: transform 0.8s ease-in-out !important;
+}
+
+.carousel-item.active {
+  position: relative;
+}
+
+/* Banner responsif 100% fit */
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover !important; 
+  object-position: center !important;
+  display: block; 
+  margin: 0;
+  padding: 0;
+}
+
+/* Penyesuaian tinggi banner untuk layar HP */
+@media (max-width: 768px) {
+  .carousel-inner {
+    height: 300px;
+  }
+  
+  .carousel-item {
+    height: 300px;
+  }
+}
+
+/* Penyesuaian untuk tablet */
+@media (max-width: 1024px) and (min-width: 768px) {
+  .carousel-inner {
+    height: 400px;
+  }
+  
+  .carousel-item {
+    height: 400px;
+  }
+}
+
+/* =======================================================
+   3. TYPOGRAPHY & HEADINGS (KEMBALIKAN DESAIN MERAH)
+======================================================= */
+.custom-section-header {
+  background-color: #750000;
+  color: #ffffff;
+  padding: 12px 40px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: inline-block; 
+  margin: 30px 0 20px 0;
+  text-align: center;
+  border-radius: 50px; /* Bentuk pil/kapsul modern */
+  box-shadow: 0 4px 10px rgba(117, 0, 0, 0.25);
+  letter-spacing: 0.5px;
+}
+
+/* =======================================================
+   4. CARD & LAYOUT UTAMA
+======================================================= */
+.custom-card-box {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid #e9ecef; 
+  border-top: 5px solid #750000; 
+  padding: 40px; 
+  width: 100%;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.04); 
+  margin-bottom: 2.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.custom-card-box:hover {
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08); 
+}
+
+/* =======================================================
+   5. LAYANAN KELURAHAN (IKON)
+======================================================= */
+.service-item {
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.service-item:hover {
+  transform: translateY(-8px); 
+}
+
+.custom-img-layanan {
+  height: 110px; 
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  margin-bottom: 15px;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); 
+}
+
+.service-item h6 {
+  font-size: 1.1rem;
+  color: #333;
+}
+
+/* =======================================================
+   6. STATISTIK & BERITA
+======================================================= */
+.stat-card {
+  background: #ffffff;
+  border: 1px solid #ffe8e8;
+  border-left: 5px solid #c70909;
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px rgba(199, 9, 9, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(199, 9, 9, 0.12);
+}
+
+.stat-value {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #750000;
+}
+
+.news-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.news-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+.hover-danger:hover {
+  color: #dc3545 !important;
+  text-decoration: underline !important;
+  transition: color 0.2s ease;
+}
+
+/* Aturan Gambar Berita Responsif */
+.news-img-mobile {
+  width: 140px;
+  min-height: 120px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+@media (max-width: 767.98px) {
+  .news-img-mobile {
+    width: 100% !important;
+    height: 200px;
+    object-fit: cover;
+    flex-shrink: unset;
+  }
+  
+  .news-card {
+    height: auto !important;
+  }
+}
+
+/* =======================================================
+   7. RESPONSIVE DESIGN (MOBILE / HP)
+======================================================= */
+@media (max-width: 991px) {
+  .custom-section-header {
+    font-size: 1.3rem;
+    padding: 10px 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Banner lebih proporsional di HP */
+  .carousel-item img {
+    height: 280px !important; 
+  }
+
+  /* Ruang kartu dikurangi agar tidak terlalu memakan tempat di HP */
+  .custom-card-box {
+    padding: 25px 15px; 
+    border-radius: 15px;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Judul merah diperkecil sedikit */
+  .custom-section-header {
+    font-size: 1.1rem;
+    padding: 8px 25px;
+    margin: 20px 0 15px 0;
+  }
+
+  /* Ikon layanan diperkecil untuk grid 2 kolom */
+  .custom-img-layanan {
+    height: 70px; 
+    margin-bottom: 10px;
+  }
+
+  .service-item h6 {
+    font-size: 0.85rem; 
+    line-height: 1.2;
+    margin-bottom: 0;
+  }
+
+  .stat-value {
+    font-size: 1.8rem;
+  }
+  
+  .stat-card span {
+    font-size: 0.85rem;
+  }
+
+  .text-justify-custom p {
+    font-size: 0.95rem !important; 
+  }
+
+  footer .text-lg-start {
+    text-align: center !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .custom-img-layanan {
+    height: 60px;
+  }
+  .service-item h6 {
+    font-size: 0.8rem;
+  }
+}
+
+.text-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Batas maksimal 2 baris teks */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+
